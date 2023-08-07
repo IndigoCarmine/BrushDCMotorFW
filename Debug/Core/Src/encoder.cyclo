@@ -1,0 +1,2 @@
+encoder.c:13:6:EncoderOverflowCallback	2
+encoder.c:24:9:GetPosition	1

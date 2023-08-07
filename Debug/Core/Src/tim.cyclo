@@ -1,0 +1,9 @@
+tim.c:33:6:MX_TIM1_Init	7
+tim.c:103:6:MX_TIM2_Init	3
+tim.c:147:6:MX_TIM3_Init	6
+tim.c:200:6:HAL_TIM_Base_MspInit	3
+tim.c:231:6:HAL_TIM_Encoder_MspInit	2
+tim.c:269:6:HAL_TIM_MspPostInit	2
+tim.c:295:6:HAL_TIM_Base_MspDeInit	3
+tim.c:325:6:HAL_TIM_Encoder_MspDeInit	2
+tim.c:353:6:HAL_TIM_PeriodElapsedCallback	3

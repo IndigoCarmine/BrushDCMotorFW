@@ -1,0 +1,2 @@
+../Core/Src/encoder.c:13:6:EncoderOverflowCallback	4	static
+../Core/Src/encoder.c:24:9:GetPosition	4	static
