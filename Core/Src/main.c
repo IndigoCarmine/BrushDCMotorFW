@@ -27,7 +27,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "led.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -105,9 +105,15 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  led_on(can);
+//	  led_on(state1);
+//	  led_on(state2);
+//	  led_on(motor);
+	  HAL_Delay(1000);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+	  led_process();
   }
   /* USER CODE END 3 */
 }

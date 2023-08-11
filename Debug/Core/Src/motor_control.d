@@ -29,7 +29,8 @@ Core/Src/motor_control.o: ../Core/Src/motor_control.c \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h \
  ../Core/Inc/adc.h ../Core/Inc/main.h ../Core/Inc/spi.h ../Core/Inc/PID.h \
- ../Core/Inc/tim.h ../Core/Inc/encoder.h
+ ../Core/Inc/tim.h ../Core/Inc/encoder.h ../Core/Inc/led.h \
+ ../Core/Inc/current.h
 ../Core/Inc/motor_control.h:
 ../Core/Inc/main.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h:
@@ -66,3 +67,5 @@ Core/Src/motor_control.o: ../Core/Src/motor_control.c \
 ../Core/Inc/PID.h:
 ../Core/Inc/tim.h:
 ../Core/Inc/encoder.h:
+../Core/Inc/led.h:
+../Core/Inc/current.h:

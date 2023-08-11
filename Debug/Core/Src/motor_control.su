@@ -1,7 +1,4 @@
 ../Core/Inc/PID.h:29:7:PID_Update	32	static
-../Core/Src/motor_control.c:22:6:InitADC	8	static
-../Core/Src/motor_control.c:27:6:Activate	8	static
-../Core/Src/motor_control.c:42:9:ReadFaultSummary	8	static
-../Core/Src/motor_control.c:45:9:ReadFault	8	static
-../Core/Src/motor_control.c:49:6:ClearFault	8	static
-../Core/Src/motor_control.c:70:6:MotorControlUpdate	16	static
+../Core/Src/motor_control.c:22:6:DriverActivate	8	static
+../Core/Src/motor_control.c:40:6:Activate	8	static
+../Core/Src/motor_control.c:68:6:MotorControlUpdate	16	static

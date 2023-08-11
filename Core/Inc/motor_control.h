@@ -11,5 +11,6 @@
 
 void MotorControlUpdate();
 
+void ClearFault();
 
 #endif /* INC_MOTOR_CONTROL_H_ */
