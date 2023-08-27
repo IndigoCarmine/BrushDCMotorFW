@@ -9,11 +9,11 @@ struct led_status
     uint8_t is_high;
 };
 
-#define LED_LIST_SIZE 4
+#define LED_LIST_SIZE 3
 struct led_status led_list[] =
 {
 	{LED_CAN_GPIO_Port,LED_CAN_Pin,0,0},
-	{LED_MOTOR_GPIO_Port,LED_MOTOR_Pin,0,0},
+//	{LED_MOTOR_GPIO_Port,LED_MOTOR_Pin,0,0},
 	{LED_STATE1_GPIO_Port,LED_STATE1_Pin,0,0},
 	{LED_STATE2_GPIO_Port,LED_STATE2_Pin,0,0}
 };

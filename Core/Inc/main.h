@@ -59,14 +59,18 @@ void Error_Handler(void);
 /* Private defines -----------------------------------------------------------*/
 #define LimitA_Pin GPIO_PIN_13
 #define LimitA_GPIO_Port GPIOC
+#define LimitA_EXTI_IRQn EXTI15_10_IRQn
 #define LimitB_Pin GPIO_PIN_14
 #define LimitB_GPIO_Port GPIOC
+#define LimitB_EXTI_IRQn EXTI15_10_IRQn
 #define nFAULT_Pin GPIO_PIN_0
 #define nFAULT_GPIO_Port GPIOB
 #define nSleep_Pin GPIO_PIN_1
 #define nSleep_GPIO_Port GPIOB
 #define PH_Pin GPIO_PIN_11
 #define PH_GPIO_Port GPIOB
+#define nSCS_Pin GPIO_PIN_12
+#define nSCS_GPIO_Port GPIOB
 #define EN_Pin GPIO_PIN_8
 #define EN_GPIO_Port GPIOA
 #define DRVOFF_Pin GPIO_PIN_5

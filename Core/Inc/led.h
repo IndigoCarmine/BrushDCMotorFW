@@ -12,7 +12,7 @@ extern "C"
     typedef enum _led
     {
         can,
-        motor,
+//        motor,
         state1,
         state2
     } led;

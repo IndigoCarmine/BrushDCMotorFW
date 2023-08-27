@@ -10,14 +10,25 @@
 #include "main.h"
 #include "adc.h"
 #include "spi.h"
-#include "PID.h"
 #include "tim.h"
 #include "encoder.h"
 #include "stdint.h"
 #include "led.h"
 #include "current.h"
+#include "config.h"
+#include "can.h"
 
 
+__IO MotorMode motor_mode = Stop;
+void ChangeMode(MotorMode mode){
+	mode = motor_mode;
+	if(motor_mode == Stop){
+		HAL_GPIO_WritePin(LED_MOTOR_GPIO_Port, LED_MOTOR_Pin, GPIO_PIN_RESET);
+	}else{
+		HAL_GPIO_WritePin(LED_MOTOR_GPIO_Port, LED_MOTOR_Pin, GPIO_PIN_SET);
+	}
+	Send_Status(motor_mode);
+}
 
 void DriverActivate(){
 
@@ -66,9 +77,36 @@ PID positionPID = {
 Position -> Current -> PWM
 */
 void MotorControlUpdate(){
-	int32_t position = GetPosition();
-	currentPID.target = PID_Update(&positionPID, position);
-	int32_t pwm = PID_Update(&currentPID, GetLawCurrent());
+	led_on(state1);
+	int32_t pwm=0;
+	switch(motor_mode){
+	case Stop:
+	{
+		HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_1);
+		break;
+	}
+	case Current:
+	{
+		pwm = PID_Update(&currentPID, GetLawCurrent());
+		break;
+	}
+	case Position:
+	{
+		int32_t position = GetPosition();
+		currentPID.target = PID_Update(&positionPID, position);
+		pwm = PID_Update(&currentPID, GetLawCurrent());
+		break;
+	}
+	case Homing:
+	{
+		break;
+	}
+	default:
+		HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_1);
+		Error_Handler();
+		break;
+	}
+
 
 	//set direction
 	if(pwm > 0){
@@ -80,5 +118,11 @@ void MotorControlUpdate(){
 	__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, pwm);
 }
 
+
+void StopFromLimit(uint32_t GPIO_Pin){
+	motor_mode = Stop;
+	HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_1);
+	Send_Status(Stop);
+}
 	
 
