@@ -10,7 +10,9 @@
 
 #include "stdint.h"
 
-#define BASE_ID_High 0x0
+//reserved BASE_ID_High==0x0, it is for Specific Usage.
+#define BASE_ID_High (0x06)
+
 
 
 #define BASE_ID (BASE_ID_High << 2)

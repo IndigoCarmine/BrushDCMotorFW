@@ -17,9 +17,10 @@ struct PID_s{
 
 	const float dt;
 	float max;
+	float epsilon;
 
-	float ITerm;
-	float DTerm;
+	float PreError;
+	float Integral;
 
 	float target;
 
@@ -27,5 +28,6 @@ struct PID_s{
 typedef struct PID_s PID;
 
 float PID_Update(PID *pid, float now);
+void PID_Reset(PID* pid,float normal_error);
 
 #endif /* INC_PID_H_ */

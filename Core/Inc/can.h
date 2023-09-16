@@ -41,7 +41,8 @@ extern CAN_HandleTypeDef hcan;
 void MX_CAN_Init(void);
 
 /* USER CODE BEGIN Prototypes */
-void Send_Status();
+void CAN_Send_Status(uint8_t status);
+void CAN_Send_Partial_Stop();
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus

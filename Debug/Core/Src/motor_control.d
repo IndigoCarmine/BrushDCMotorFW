@@ -1,5 +1,6 @@
 Core/Src/motor_control.o: ../Core/Src/motor_control.c \
- ../Core/Inc/motor_control.h ../Core/Inc/PID.h ../Core/Inc/main.h \
+ ../Core/Inc/motor_control.h ../Core/Inc/PID.h \
+ ../Core/Inc/driver_register.h ../Core/Inc/main.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h \
  ../Core/Inc/stm32f1xx_hal_conf.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc.h \
@@ -30,9 +31,10 @@ Core/Src/motor_control.o: ../Core/Src/motor_control.c \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h \
  ../Core/Inc/adc.h ../Core/Inc/main.h ../Core/Inc/spi.h ../Core/Inc/tim.h \
  ../Core/Inc/encoder.h ../Core/Inc/led.h ../Core/Inc/current.h \
- ../Core/Inc/config.h
+ ../Core/Inc/config.h ../Core/Inc/can.h
 ../Core/Inc/motor_control.h:
 ../Core/Inc/PID.h:
+../Core/Inc/driver_register.h:
 ../Core/Inc/main.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h:
 ../Core/Inc/stm32f1xx_hal_conf.h:
@@ -70,3 +72,4 @@ Core/Src/motor_control.o: ../Core/Src/motor_control.c \
 ../Core/Inc/led.h:
 ../Core/Inc/current.h:
 ../Core/Inc/config.h:
+../Core/Inc/can.h:

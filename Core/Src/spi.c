@@ -22,7 +22,7 @@
 
 /* USER CODE BEGIN 0 */
 #include "assert.h"
-
+#include "led.h"
 #define SPI_TIMEOUT 1000
 /* USER CODE END 0 */
 
@@ -33,7 +33,7 @@ void MX_SPI1_Init(void)
 {
 
   /* USER CODE BEGIN SPI1_Init 0 */
-
+  HAL_GPIO_WritePin(nSCS_GPIO_Port, nSCS_Pin, GPIO_PIN_SET);
   /* USER CODE END SPI1_Init 0 */
 
   /* USER CODE BEGIN SPI1_Init 1 */
@@ -42,11 +42,11 @@ void MX_SPI1_Init(void)
   hspi1.Instance = SPI1;
   hspi1.Init.Mode = SPI_MODE_MASTER;
   hspi1.Init.Direction = SPI_DIRECTION_2LINES;
-  hspi1.Init.DataSize = SPI_DATASIZE_8BIT;
+  hspi1.Init.DataSize = SPI_DATASIZE_16BIT;
   hspi1.Init.CLKPolarity = SPI_POLARITY_LOW;
   hspi1.Init.CLKPhase = SPI_PHASE_2EDGE;
   hspi1.Init.NSS = SPI_NSS_SOFT;
-  hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_16;
+  hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_32;
   hspi1.Init.FirstBit = SPI_FIRSTBIT_MSB;
   hspi1.Init.TIMode = SPI_TIMODE_DISABLE;
   hspi1.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
@@ -56,7 +56,7 @@ void MX_SPI1_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN SPI1_Init 2 */
-
+  __HAL_SPI_ENABLE(&hspi1);
   /* USER CODE END SPI1_Init 2 */
 
 }
@@ -122,26 +122,37 @@ void HAL_SPI_MspDeInit(SPI_HandleTypeDef* spiHandle)
 /* USER CODE BEGIN 1 */
 uint16_t SPI_Read(uint8_t address){
 	//address size assert
-	assert(address & 0b11000000);
-
+	assert(!(address & 0b11000000));
 	uint8_t TxData[2];
-	TxData[0] = address | 0b01000000;//MSB bit high for read
-	uint8_t RxData[2];
-	HAL_SPI_TransmitReceive(&hspi1, TxData, RxData, 2, SPI_TIMEOUT);
+	TxData[1] = address | 0b01000000;//MSB bit high for read
 
-	return (((uint16_t)RxData[0]) << 8) + RxData[1];
+	uint8_t RxData[2];
+	HAL_GPIO_WritePin(nSCS_GPIO_Port, nSCS_Pin, GPIO_PIN_RESET);
+	HAL_Delay(1);
+	HAL_StatusTypeDef status = HAL_SPI_TransmitReceive(&hspi1, (uint8_t*)TxData, (uint8_t*)RxData, 1, SPI_TIMEOUT);
+	HAL_Delay(1);
+	HAL_GPIO_WritePin(nSCS_GPIO_Port, nSCS_Pin, GPIO_PIN_SET);
+	if(status!=HAL_OK)led_on(state2);
+	return (((uint16_t)RxData[1]) << 8) + RxData[0];
 
 }
 uint16_t SPI_Write(uint8_t address,uint8_t data){
 	//address size assert
-	assert(address & 0b11000000);
+	assert(!(address & 0b11000000));
 
 	uint8_t TxData[2];
-	TxData[0] = address | 0b00000000;
+	TxData[1] = address | 0b00000000;
+	TxData[0] = data;
 	uint8_t RxData[2];
-	HAL_SPI_TransmitReceive(&hspi1, TxData, RxData, 2, SPI_TIMEOUT);
 
-	return (((uint16_t)RxData[0]) << 8) + RxData[1];
-
+	HAL_GPIO_WritePin(nSCS_GPIO_Port, nSCS_Pin, GPIO_PIN_RESET);
+	HAL_Delay(1);
+	HAL_StatusTypeDef status = HAL_SPI_TransmitReceive(&hspi1, (uint8_t*)TxData, (uint8_t*)RxData, 1, SPI_TIMEOUT);
+	HAL_Delay(1);
+	HAL_GPIO_WritePin(nSCS_GPIO_Port, nSCS_Pin, GPIO_PIN_SET);
+	if(status!=HAL_OK){
+		led_on(state2);
+	}
+	return (((uint16_t)RxData[1]) << 8) + RxData[0];
 }
 /* USER CODE END 1 */

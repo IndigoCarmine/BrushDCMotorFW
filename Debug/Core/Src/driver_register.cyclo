@@ -1,0 +1,3 @@
+driver_register.c:4:9:ReadFaultSummary	1
+driver_register.c:8:9:ReadFault	1
+driver_register.c:13:6:ClearFault	1

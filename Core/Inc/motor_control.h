@@ -1,4 +1,4 @@
-/**
+ /**
  * motor_control.h
  *
  *  Created on: 2023/08/01
@@ -7,13 +7,16 @@
 
 #ifndef INC_MOTOR_CONTROL_H_
 #define INC_MOTOR_CONTROL_H_
+#include "stdint.h"
 
 typedef enum MotorMode_s
 {
     Stop,
+	PWM,
     Current,
     Position,
-    Homing,
+	Interlock_Position,
+	Interlock_Waiting,
 }MotorMode;
 
 
@@ -21,7 +24,11 @@ void MotorControlUpdate();
 
 void ClearFault();
 void ChangeMode(MotorMode mode);
+MotorMode GetMode();
 void StopFromLimit(uint32_t Limit_GPIO_Pin);
+
+void Activate();
+
 #include "PID.h"
 
 extern PID currentPID;

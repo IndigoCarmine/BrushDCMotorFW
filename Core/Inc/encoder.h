@@ -9,8 +9,8 @@
 #define INC_ENCODER_H_
 
 
-int32_t GetPosition();
+float Encoder_GetPosition();
 
-void EncoderOverflowCallback();
-
+void Encoder_OverflowCallback();
+void Encoder_Reset();
 #endif /* INC_ENCODER_H_ */

@@ -1,6 +1,8 @@
 ../Core/Src/can.c:31:6:CAN_FILTER_Init	48	static
 ../Core/Src/can.c:54:6:MX_CAN_Init	8	static
-../Core/Src/can.c:94:6:HAL_CAN_MspInit	40	static
-../Core/Src/can.c:130:6:HAL_CAN_MspDeInit	16	static
-../Core/Src/can.c:162:6:Send_Status	24	static
-../Core/Src/can.c:167:6:HAL_CAN_RxFifo0MsgPendingCallback	56	static
+../Core/Src/can.c:93:6:HAL_CAN_MspInit	40	static
+../Core/Src/can.c:129:6:HAL_CAN_MspDeInit	16	static
+../Core/Src/can.c:158:6:CAN_Send_Status	24	static
+../Core/Src/can.c:172:6:CAN_Set_InterLock_Group	16	static
+../Core/Src/can.c:176:6:CAN_Send_Partial_Stop	16	static
+../Core/Src/can.c:187:6:HAL_CAN_RxFifo0MsgPendingCallback	56	static

@@ -80,7 +80,6 @@ void MX_CAN_Init(void)
   /* USER CODE BEGIN CAN_Init 2 */
   CAN_FILTER_Init();
 
-	// 割り込み処�?の開�?
 	if (HAL_CAN_ActivateNotification(&hcan, CAN_IT_RX_FIFO0_MSG_PENDING) != HAL_OK)
 	{
 		Error_Handler();
@@ -119,7 +118,7 @@ void HAL_CAN_MspInit(CAN_HandleTypeDef* canHandle)
     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
     /* CAN1 interrupt Init */
-    HAL_NVIC_SetPriority(USB_LP_CAN1_RX0_IRQn, 0, 0);
+    HAL_NVIC_SetPriority(USB_LP_CAN1_RX0_IRQn, 3, 0);
     HAL_NVIC_EnableIRQ(USB_LP_CAN1_RX0_IRQn);
   /* USER CODE BEGIN CAN1_MspInit 1 */
 
@@ -155,13 +154,34 @@ void HAL_CAN_MspDeInit(CAN_HandleTypeDef* canHandle)
 /* USER CODE BEGIN 1 */
 
 
-CAN_TxHeaderTypeDef TxHeader ={
-		.StdId = BASE_ID + 3,
-		.DLC = 1
-};
-void Send_Status(uint8_t status){
+
+void CAN_Send_Status(uint8_t status){
 	uint32_t TxMailbox;
+	static const CAN_TxHeaderTypeDef TxHeader ={
+			.StdId = BASE_ID + 3,
+			.DLC = 1
+	};
     HAL_CAN_AddTxMessage(&hcan, &TxHeader, &status, &TxMailbox);
+    led_on(can);
+}
+
+
+
+__IO uint8_t interlock_group_id = 0;
+
+void CAN_Set_InterLock_Group(uint8_t id){
+	interlock_group_id = id;
+}
+
+void CAN_Send_Partial_Stop(){
+	uint32_t TxMailbox;
+	static const CAN_TxHeaderTypeDef TxHeader ={
+			.StdId = 0x1,
+			.DLC = 1
+	};
+	uint8_t group_id = interlock_group_id;
+    HAL_CAN_AddTxMessage(&hcan, &TxHeader, &group_id, &TxMailbox);
+    led_on(can);
 }
 
 void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan){
@@ -171,6 +191,22 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan){
     {
     	led_on(can);
     	switch(RxHeader.StdId){
+    	case 0x0:
+    	{
+    		//emergency stop
+    		ChangeMode(Stop);
+    		return;
+    		break;
+    	}
+    	case 0x01:
+    	{
+    		//Partial stop
+    		if(interlock_group_id == RxData[0]){
+    			ChangeMode(Stop);
+    		}
+    		return;
+    		break;
+    	}
     	case BASE_ID:
     	{
     		//set target
@@ -185,28 +221,30 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan){
     			memcpy(&positionPID.target,RxData,4);
     			break;
     		}
-    		case Homing:
+    		case Interlock_Position:
     		{
-    			memcpy(&currentPID.target,RxData,4);
+    			memcpy(&positionPID.target,RxData,4);
     			break;
     		}
     		case Stop:
     		default:
     			break;
     		}
+    		return;
     		break;
     	}
     	case BASE_ID + 1:
 		{
 			//mode setting
-			ChangeMode(motor_mode);
+			ChangeMode(RxData[0]);
+			return;
 			break;
 		}
     	case BASE_ID + 2:
 		{
 			//parameter setting
 			/*
-			 * byte: PID parameter index
+			 * byte: parameter index
 			 * float: parameter value
 			 */
 			switch(RxData[0]){
@@ -219,8 +257,11 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan){
 			case 5:{memcpy(&positionPID.IGain,RxData + 1,4);break;}
 			case 6:{memcpy(&positionPID.DGain,RxData + 1,4);break;}
 			case 7:{memcpy(&positionPID.max,  RxData + 1,4);break;}
+
+			case 8:{CAN_Set_InterLock_Group(RxData[1]);break;}
 			default:break;
 			}
+			return;
 			break;
 		}
     	}

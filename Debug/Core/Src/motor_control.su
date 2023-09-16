@@ -1,3 +1,9 @@
-../Core/Src/motor_control.c:24:6:DriverActivate	8	static
-../Core/Src/motor_control.c:42:6:Activate	8	static
-../Core/Src/motor_control.c:70:6:MotorControlUpdate	16	static
+../Core/Src/motor_control.c:43:11:GetMode	4	static
+../Core/Src/motor_control.c:46:6:StateReset	16	static
+../Core/Src/motor_control.c:51:6:ChangeMode	16	static
+../Core/Src/motor_control.c:71:6:DriverActivate	8	static
+../Core/Src/motor_control.c:89:6:Activate	8	static
+../Core/Src/motor_control.c:104:6:MotorControlUpdate	16	static
+../Core/Src/motor_control.c:155:6:StopFromLimit	24	static
+../Core/Src/motor_control.c:171:6:SetPWMAndDirection	16	static
+../Core/Src/motor_control.c:192:5:GetCurrentDirection	4	static

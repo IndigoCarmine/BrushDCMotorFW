@@ -29,6 +29,7 @@
 /* USER CODE BEGIN Includes */
 #include "led.h"
 #include "config.h"
+#include "motor_control.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -99,13 +100,27 @@ int main(void)
   MX_TIM2_Init();
   MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
+  led_on(state1);
   led_on(state2);
+  led_on(can);
+  led_process();
+  Activate();
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  if(HAL_GPIO_ReadPin(nFAULT_GPIO_Port, nFAULT_Pin)==GPIO_PIN_RESET){
+		  led_on(can);
+		  ClearFault();
+		  ChangeMode(Stop);
+	  }
+	  static int lasttime_send_stop = 0;
+	  if(GetMode() == Interlock_Waiting && HAL_GetTick() - lasttime_send_stop>50){
+		  CAN_Send_Partial_Stop();
+		  lasttime_send_stop = HAL_GetTick();
+	  }
 
     /* USER CODE END WHILE */
 

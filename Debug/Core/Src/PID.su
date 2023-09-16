@@ -1,1 +1,2 @@
-../Core/Src/PID.c:10:7:PID_Update	32	static
+../Core/Src/PID.c:13:7:PID_Update	32	static
+../Core/Src/PID.c:34:6:PID_Reset	16	static

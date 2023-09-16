@@ -3,6 +3,7 @@
 "./Core/Src/can.o"
 "./Core/Src/current.o"
 "./Core/Src/dma.o"
+"./Core/Src/driver_register.o"
 "./Core/Src/encoder.o"
 "./Core/Src/gpio.o"
 "./Core/Src/led.o"
