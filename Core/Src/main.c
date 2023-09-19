@@ -109,6 +109,8 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+
+  int lasttime_send_stop = 0;
   while (1)
   {
 	  if(HAL_GPIO_ReadPin(nFAULT_GPIO_Port, nFAULT_Pin)==GPIO_PIN_RESET){
@@ -116,8 +118,8 @@ int main(void)
 		  ClearFault();
 		  ChangeMode(Stop);
 	  }
-	  static int lasttime_send_stop = 0;
-	  if(GetMode() == Interlock_Waiting && HAL_GetTick() - lasttime_send_stop>50){
+
+	  if(GetMode() == Interlock_Waiting && (HAL_GetTick() - lasttime_send_stop>50)){
 		  CAN_Send_Partial_Stop();
 		  lasttime_send_stop = HAL_GetTick();
 	  }

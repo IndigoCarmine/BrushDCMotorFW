@@ -7,8 +7,14 @@
 
 #include "tim.h"
 #include "encoder.h"
+#include "config.h"
 
 int overflowcnt = 0;
+__IO int direction = 1;
+
+void Encoder_SetDirection(int dir){
+	direction = dir;
+}
 
 void Encoder_OverflowCallback(){
 
@@ -24,7 +30,7 @@ void Encoder_OverflowCallback(){
     }
 }
 float Encoder_GetPosition(){
-	return (float)overflowcnt * UINT16_MAX + htim2.Instance->CNT;
+	return direction *ENCODER_SCALER* ((float)overflowcnt * UINT16_MAX + htim2.Instance->CNT);
 }
 
 void Encoder_Reset(){

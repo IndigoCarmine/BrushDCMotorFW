@@ -1,3 +1,4 @@
-encoder.c:13:6:Encoder_OverflowCallback	2
-encoder.c:26:7:Encoder_GetPosition	1
-encoder.c:30:6:Encoder_Reset	1
+encoder.c:15:6:Encoder_SetDirection	1
+encoder.c:19:6:Encoder_OverflowCallback	2
+encoder.c:32:7:Encoder_GetPosition	1
+encoder.c:36:6:Encoder_Reset	1

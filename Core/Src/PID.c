@@ -34,4 +34,5 @@ float PID_Update(PID *pid,float now){
 void PID_Reset(PID* pid,float normal_error){
 	pid->Integral = 0;
 	pid->PreError = normal_error;
+	pid->target = 0;
 }

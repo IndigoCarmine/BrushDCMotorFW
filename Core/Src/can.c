@@ -25,7 +25,7 @@
 #include "config.h"
 #include "motor_control.h"
 #include "led.h"
-
+#include "encoder.h"
 extern MotorMode motor_mode;
 
 void CAN_FILTER_Init(void){
@@ -202,7 +202,7 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan){
     	{
     		//Partial stop
     		if(interlock_group_id == RxData[0]){
-    			ChangeMode(Stop);
+    			ChangeMode(Interlock_Stop);
     		}
     		return;
     		break;
@@ -259,6 +259,7 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan){
 			case 7:{memcpy(&positionPID.max,  RxData + 1,4);break;}
 
 			case 8:{CAN_Set_InterLock_Group(RxData[1]);break;}
+			case 9:{Encoder_SetDirection(RxData[1]? 1:-1);break;}
 			default:break;
 			}
 			return;

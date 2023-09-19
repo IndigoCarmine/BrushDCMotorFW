@@ -1,3 +1,4 @@
-../Core/Src/encoder.c:13:6:Encoder_OverflowCallback	4	static
-../Core/Src/encoder.c:26:7:Encoder_GetPosition	16	static
-../Core/Src/encoder.c:30:6:Encoder_Reset	4	static
+../Core/Src/encoder.c:15:6:Encoder_SetDirection	16	static
+../Core/Src/encoder.c:19:6:Encoder_OverflowCallback	4	static
+../Core/Src/encoder.c:32:7:Encoder_GetPosition	16	static
+../Core/Src/encoder.c:36:6:Encoder_Reset	4	static

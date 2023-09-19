@@ -49,8 +49,11 @@ void StateReset(){
 	Encoder_Reset();
 }
 void ChangeMode(MotorMode mode){
+	//if motor_mode is InterlockWaiting, Cannot Change Interlock_Stop.
+	if(motor_mode == Interlock_Waiting && mode == Interlock_Stop)return;
+
 	motor_mode = mode;
-	if(motor_mode == Stop ||motor_mode == Interlock_Waiting){
+	if(motor_mode == Stop ||motor_mode == Interlock_Waiting ||motor_mode == Interlock_Stop){
 		HAL_GPIO_WritePin(LED_MOTOR_GPIO_Port, LED_MOTOR_Pin, GPIO_PIN_RESET);
 		//pid control stop
 		HAL_TIM_Base_Stop_IT(&htim3);
@@ -157,7 +160,7 @@ void StopFromLimit(uint32_t GPIO_Pin){
 	//first, stop as soon as possible
 	ChangeMode(Stop);
 
-	if(mode == Interlock_Position){
+	if(mode == Interlock_Position || mode == Interlock_Waiting){
 		ChangeMode(Interlock_Waiting);
 		CAN_Send_Partial_Stop();
 		// the job keeps doing on main function.

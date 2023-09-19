@@ -82,7 +82,11 @@ void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 2 */
+
+uint32_t last_time=0;
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin){
-	StopFromLimit(GPIO_Pin);
+	//for avoiding chattering.
+	if(HAL_GetTick()-last_time>1000)StopFromLimit(GPIO_Pin);
+	last_time = HAL_GetTick();
 }
 /* USER CODE END 2 */

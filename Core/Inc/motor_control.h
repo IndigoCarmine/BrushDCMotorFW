@@ -17,6 +17,7 @@ typedef enum MotorMode_s
     Position,
 	Interlock_Position,
 	Interlock_Waiting,
+	Interlock_Stop
 }MotorMode;
 
 

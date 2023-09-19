@@ -10,7 +10,7 @@
 
 
 float Encoder_GetPosition();
-
+void Encoder_SetDirection(int dir);
 void Encoder_OverflowCallback();
 void Encoder_Reset();
 #endif /* INC_ENCODER_H_ */
