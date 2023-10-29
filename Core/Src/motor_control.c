@@ -31,7 +31,7 @@ PID currentPID = {
 //position -> ampare
 PID positionPID = {
 		.dt = 1,
-		.PGain=0.1,
+		.PGain= 0.1,
 		.epsilon = 100,
 		.max = 1000
 };
