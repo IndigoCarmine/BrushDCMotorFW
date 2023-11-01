@@ -5,4 +5,4 @@ can.c:129:6:HAL_CAN_MspDeInit	2
 can.c:158:6:CAN_Send_Status	1
 can.c:172:6:CAN_Set_InterLock_Group	1
 can.c:176:6:CAN_Send_Partial_Stop	1
-can.c:187:6:HAL_CAN_RxFifo0MsgPendingCallback	23
+can.c:187:6:HAL_CAN_RxFifo0MsgPendingCallback	25

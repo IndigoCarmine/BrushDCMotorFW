@@ -22,18 +22,19 @@
 //ampare -> pwm compare value
 PID currentPID = {
 		.dt = 1,
-		.PGain = 13,
-		.DGain = -5,
+		.PGain = 12,
+		.DGain = -7.5,
 		.epsilon = 2000,
-		.max = 20000
+		.max = 19433
 };
 
 //position -> ampare
 PID positionPID = {
 		.dt = 1,
-		.PGain= 0.1,
-		.epsilon = 100,
-		.max = 1000
+		.PGain= 0.3,
+		.DGain = 96,
+		.epsilon = 200,
+		.max = 10000
 };
 
 void SetPWMAndDirection(int32_t pwm);

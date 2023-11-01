@@ -260,6 +260,10 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan){
 
 			case 8:{CAN_Set_InterLock_Group(RxData[1]);break;}
 			case 9:{Encoder_SetDirection(RxData[1]? 1:-1);break;}
+
+
+			case 10:{memcpy(&currentPID.epsilon,  RxData + 1,4);break;}
+			case 11:{memcpy(&positionPID.epsilon,  RxData + 1,4);break;}
 			default:break;
 			}
 			return;
